@@ -1,0 +1,15 @@
+
+------[ Known Bugs ]-------------------------------------------------------
+
+- None known.
+
+
+------[ Fixed Bugs ]-------------------------------------------------------
+
+- Fixed default initial sum value of the lzo.adler() function, as it was
+	non-zero (I didn't know how the  adler32() function works when I wrote)
+	the first versions of the Lua module :)
+
+- Fixed bad order in returned results when data cannot be (de)compressed.
+
+--------------------------------------------------------------[ EOF ]------

@@ -1,0 +1,6 @@
+
+AP / 2003-04-10:
+	* luaLZO.c: moved allocation of memory used by miniLZO from global
+			scope inside function luaLZO_compress(), module is now MT-safe.
+	* luaLZO_open (luaLZO.c): improved namespace creation method.
+	* test.lua: improved self-test script.
