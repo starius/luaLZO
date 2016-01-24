@@ -2,6 +2,9 @@
 Original auhors:
 	Adrián Pérez de Castro <mobius@iespana.es>
 
+Updated for Lua 5.1 and LuaJIT by:
+	Boris Nagaev <bnagaev@gmail.com>
+
 Acknowledgements:
 	The miniLZO and the full LZO library were created by
 	Markus Franz Xaver Johannes Oberhumer <markus@oberhumer.com>
