@@ -36,9 +36,9 @@
 #define PADSIZE (4 + sizeof(lzo_uint) + sizeof(lzo_uint))
 
 /*
- * Only the initialization function (luaLZO_open) needs to be exported.
+ * Only the initialization function (luaopen_luaLZO) needs to be exported.
  */
-API int luaLZO_open(lua_State*);
+API int luaopen_luaLZO(lua_State*);
     int luaLZO_compress(lua_State*);
     int luaLZO_decompress(lua_State*);
 		int luaLZO_adler(lua_State*);
@@ -54,7 +54,7 @@ API int luaLZO_open(lua_State*);
 
 
 int
-luaLZO_open(lua_State* L)
+luaopen_luaLZO(lua_State* L)
 {
 	ASSERT(L);
 	
@@ -85,10 +85,7 @@ luaLZO_open(lua_State* L)
 	lua_pushcfunction(L, luaLZO_adler);
 	lua_rawset(L, -3);
 
-	/* Assign name to table */
-	lua_settable(L, LUA_GLOBALSINDEX);
-	
-	return 0;
+	return 1;
 }
 
 
