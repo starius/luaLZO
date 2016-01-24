@@ -1,5 +1,12 @@
 # luaLZO, Lua miniLZO Module
 
+[![Build Status][build-status]][travis]
+[![License][license]](LICENSE)
+
+[license]: https://img.shields.io/badge/License-GPL2-brightgreen.png
+[travis]: https://travis-ci.org/starius/luaLZO
+[build-status]: https://travis-ci.org/starius/luaLZO.png
+
 Original auhors:
 	Adrián Pérez de Castro <mobius@iespana.es>
 
