@@ -35,6 +35,12 @@
 
 #define PADSIZE (4 + sizeof(lzo_uint) + sizeof(lzo_uint))
 
+#if LUA_VERSION_NUM == 501
+#define compat_rawlen lua_objlen
+#else
+#define compat_rawlen lua_rawlen
+#endif
+
 /*
  * Only the initialization function (luaopen_luaLZO) needs to be exported.
  */
@@ -102,7 +108,7 @@ luaLZO_compress(lua_State *L)
 		luaL_error(L, "argument must be a string");
 	}
 
-	in_len 	= (lzo_uint) lua_strlen(L, -1);
+	in_len 	= (lzo_uint) compat_rawlen(L, -1);
 	out_len	= in_len + (in_len>>6) + 26 + sizeof(lzo_uint);
 	in			= (lzo_byte*) lua_tostring(L, -1);
 	out			= (lzo_byte*) xmalloc(sizeof(lzo_byte) * out_len);
@@ -190,7 +196,7 @@ luaLZO_adler(lua_State *L)
 
 	adler = lzo_adler32(adler, 
 			(lzo_byte*) lua_tostring(L, -1),
-			(lzo_uint) lua_strlen(L, -1));
+			(lzo_uint) compat_rawlen(L, -1));
 	lua_pop(L, 1);
 	lua_pushnumber(L, adler);
 	return 1;
