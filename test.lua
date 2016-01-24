@@ -13,7 +13,7 @@
 
 -- Behaves like C's printf :P
 function printf(fmt, ...)
-	io.stdout:write(string.format(fmt, unpack(arg)))
+	io.stdout:write(fmt:format(...))
 	io.stdout:flush()
 end
 
