@@ -49,16 +49,6 @@ API int luaopen_luaLZO(lua_State*);
     int luaLZO_decompress(lua_State*);
 		int luaLZO_adler(lua_State*);
 
-
-/*
- * Macro taken from the 'testmini.c' example included with mini-LZO.
- * LZO needs a memory buffer for temporal usage during compression.
- */
-#define HEAP_ALLOC(var,size) \
-	lzo_align_t __LZO_MMODEL var \
-	[ ((size) + (sizeof(lzo_align_t) - 1)) / sizeof(lzo_align_t) ]
-
-
 int
 luaopen_luaLZO(lua_State* L)
 {
@@ -80,7 +70,8 @@ luaopen_luaLZO(lua_State* L)
 
 	/* Register functions */
 	lua_pushstring(L, "compress");
-	lua_pushcfunction(L, luaLZO_compress);
+	lua_newuserdata(L, LZO1X_1_MEM_COMPRESS); // temp_buffer
+	lua_pushcclosure(L, luaLZO_compress, 1);
 	lua_rawset(L, -3);
 
 	lua_pushstring(L, "decompress");
@@ -98,7 +89,7 @@ luaopen_luaLZO(lua_State* L)
 int
 luaLZO_compress(lua_State *L)
 {
-	HEAP_ALLOC(temp_buffer, LZO1X_1_MEM_COMPRESS);
+	lzo_align_t* temp_buffer = lua_touserdata(L, lua_upvalueindex(1));
 	lzo_byte *out, *in;
 	lzo_uint in_len, out_len;
 	
