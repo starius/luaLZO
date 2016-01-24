@@ -17,13 +17,9 @@ function printf(fmt, ...)
 	io.stdout:flush()
 end
 
--- Search table for library suffix
-suffixes = { LINUX="so", OSX="dylib", WIN32="dll", UNIX="so" }
-suffix   = suffixes[os.getenv("OS")] or "dylib"
-
 -- Load the library
-printf("Loading 'luaLZO.%s'\n", suffix)
-loadlib("./luaLZO." .. suffix , "luaLZO_open")()
+printf("Loading 'luaLZO'\n")
+lzo = require 'luaLZO'
 
 -- We'll be using string.length() some times...
 len = string.len
