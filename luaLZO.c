@@ -102,7 +102,7 @@ luaLZO_compress(lua_State *L)
 	in_len 	= (lzo_uint) compat_rawlen(L, -1);
 	out_len	= in_len + (in_len>>6) + 26 + sizeof(lzo_uint);
 	in			= (lzo_byte*) lua_tostring(L, -1);
-	out			= (lzo_byte*) xmalloc(sizeof(lzo_byte) * out_len);
+	out			= (lzo_byte*) lua_newuserdata(L, sizeof(lzo_byte) * out_len);
 
 	if (lzo1x_1_compress(in, in_len, out + PADSIZE,
 											 &out_len, temp_buffer) != LZO_E_OK)
@@ -118,7 +118,6 @@ luaLZO_compress(lua_State *L)
 	*((lzo_uint*) (out + 4 + sizeof(lzo_uint))) = out_len;
 
 	lua_pushlstring(L, out, (size_t) (out_len + PADSIZE));
-	xfree(out);
 	
 	return 1;
 }
@@ -145,7 +144,7 @@ luaLZO_decompress(lua_State *L)
 
 	out_len	= *((lzo_uint*) (in + 4));
 	in_len 	= *((lzo_uint*) (in + 4 + sizeof(lzo_uint)));
-	out			= (lzo_byte*) xmalloc(sizeof(lzo_byte) * out_len);
+	out			= (lzo_byte*) lua_newuserdata(L, sizeof(lzo_byte) * out_len);
 
 	if (lzo1x_decompress(in + PADSIZE, in_len, out,
 											 &decoded_len, NULL) != LZO_E_OK)
@@ -158,7 +157,6 @@ luaLZO_decompress(lua_State *L)
 
 	ASSERT(decoded_len == out_len);
 	lua_pushlstring(L, out, (size_t) out_len);
-	xfree(out);
 	
 	return 1;
 }
