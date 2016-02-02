@@ -107,11 +107,12 @@ luaLZO_compress(lua_State *L)
 	if (lzo1x_1_compress(in, in_len, out + PADSIZE,
 											 &out_len, temp_buffer) != LZO_E_OK)
 	{
+		lua_pop(L, 2);
 		lua_pushnil(L);
 		lua_pushstring(L, "LZO was not able of encoding the data");
 		return 2;
 	}
-	lua_pop(L, 1);
+	lua_remove(L, -2);
 
 	out[0] = 'L';	out[1] = 'Z';	out[2] = 'O';	out[3] = '\0';
 	*((lzo_uint*) (out + 4)) = in_len;
@@ -149,11 +150,12 @@ luaLZO_decompress(lua_State *L)
 	if (lzo1x_decompress(in + PADSIZE, in_len, out,
 											 &decoded_len, NULL) != LZO_E_OK)
 	{
+		lua_pop(L, 2);
 		lua_pushnil(L);
 		lua_pushstring(L, "LZO wasn't able to decode the data");
 		return 2;
 	}
-	lua_pop(L, 1);
+	lua_remove(L, -2);
 
 	ASSERT(decoded_len == out_len);
 	lua_pushlstring(L, out, (size_t) out_len);
