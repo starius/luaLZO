@@ -1,11 +1,14 @@
 # luaLZO, Lua miniLZO Module
 
-[![Build Status][build-status]][travis]
+[![Travis build][travis-badge]][travis-page]
+[![AppVeyor build][appveyor-badge]][appveyor-page]
 [![License][license]](LICENSE)
 
 [license]: https://img.shields.io/badge/License-GPL2-brightgreen.png
-[travis]: https://travis-ci.org/starius/luaLZO
-[build-status]: https://travis-ci.org/starius/luaLZO.png
+[travis-page]: https://travis-ci.org/starius/luaLZO
+[travis-badge]: https://travis-ci.org/starius/luaLZO.png
+[appveyor-page]: https://ci.appveyor.com/project/starius/luaLZO
+[appveyor-badge]: https://ci.appveyor.com/api/projects/status/25c553lmnp8tkgn6
 
 Original auhors:
 	Adrián Pérez de Castro <mobius@iespana.es>
