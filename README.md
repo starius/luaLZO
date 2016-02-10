@@ -11,16 +11,15 @@
 [appveyor-badge]: https://ci.appveyor.com/api/projects/status/25c553lmnp8tkgn6
 
 Original auhors:
-	Adrián Pérez de Castro <mobius@iespana.es>
+    Adrián Pérez de Castro <mobius@iespana.es>
 
 Updated for Lua 5.1 and LuaJIT by:
-	Boris Nagaev <bnagaev@gmail.com>
+    Boris Nagaev <bnagaev@gmail.com>
 
 Acknowledgements:
-	The miniLZO and the full LZO library were created by
-	Markus Franz Xaver Johannes Oberhumer <markus@oberhumer.com>
-	More info at http://www.oberhumer.com/opensource/lzo/
-
+    The miniLZO and the full LZO library were created by
+    Markus Franz Xaver Johannes Oberhumer <markus@oberhumer.com>.
+    More info at http://www.oberhumer.com/opensource/lzo/
 
 ## Introduction
 
@@ -44,10 +43,10 @@ I think that it's very hard to make it simpler ;)
 
 You will need the following in order to build the module:
 
-	- Working C compiler, GCC recommended.
-	- Lua 5.1 or above, including headers and libraries. Dynamically
-		loadable versions of the libraries are recommended.
-	- luarocks
+  * Working C compiler, GCC recommended;
+  * Lua 5.1 or above, including headers and libraries. Dynamically
+    loadable versions of the libraries are recommended;
+  * luarocks.
 
 ## Operation
 
@@ -63,8 +62,9 @@ str = lzo.decompress(compressed_str)
 ```
 
 As a rule of thumb, the following properties are always true:
-	- `str == lzo.decompress(lzo.compress(str))`
-	- `str == lzo.compress(lzo.decompress(str))`
+
+  * `str == lzo.decompress(lzo.compress(str))`
+  * `str == lzo.compress(lzo.decompress(str))`
 
 Note that only (and when I say 'only', I mean  'only') Lua string may be
 compressed...  What about other kinds of data? You have to convert other
@@ -77,22 +77,22 @@ Here is a quick example showing how to compress a file (the file must be
 shorter than the amount of available memory):
 
 ```lua
-	in_filename  = "/path/to/file"
-	out_filename = "/path/to/another/file"
-	inf  = io.open(in_filename,  "rb")
-	outf = io.open(out_filename, "wb")
+in_filename  = "/path/to/file"
+out_filename = "/path/to/another/file"
+inf  = io.open(in_filename,  "rb")
+outf = io.open(out_filename, "wb")
 
-	-- Read, compress & write
-	outf:write(lzo.compress(inf:read("*a")))
+-- Read, compress & write
+outf:write(lzo.compress(inf:read("*a")))
 
-	outf:close()
-	inf:close()
+outf:close()
+inf:close()
 ```
 
 To decompress the file again, just change the line in the middle to:
 
 ```lua
-	outf:write(lzo.decompress(inf:read("*a")))
+outf:write(lzo.decompress(inf:read("*a")))
 ```
 
 ## Extras
@@ -104,12 +104,12 @@ sum, so you can use the function  to obtain the sum of a long byte stream
 that is split in pieces, i.e:
 
 ```lua
-	bytes = obtain_some_bytes()
-	sum   = 0
-	while (string.len(bytes) > 0) do
-		sum   = lzo.adler(bytes, sum)
-		bytes = obtain_more_bytes()
-	end
+bytes = obtain_some_bytes()
+sum   = 0
+while (string.len(bytes) > 0) do
+    sum   = lzo.adler(bytes, sum)
+    bytes = obtain_more_bytes()
+end
 ```
 
 This function is not needed to be  exported in order to (de)compress data,
